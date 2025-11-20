@@ -1,20 +1,50 @@
 import { useState } from "react";
 
+import { createUserWithEmailAndPassword } from "firebase/auth";
+
+import { auth } from "../firebase";
+
 
 
 
 function Login () {
     const [isSignUpActive, setIsSignUpActive] = useState(false);
+    const[email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
     const handleMethodChange = () => {
         setIsSignUpActive(!isSignUpActive);
+    };
+
+    const handleSignup = () => {
+        if (!email || !password) return;
+        createUserWithEmailAndPassword( auth, email, password)
+        .then((userCredential) => {
+            const user = userCredential.user;
+            console.log(user)
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage= error.message;
+            console.log(errorCode, errorMessage);
+        }
+
+        );
+    };
+
+    const handleEmailChange = (e) =>{
+        setEmail(e.target.value)
+    };
+
+    const handlePasswordChange =(e) =>{
+        setPassword(e.target.value)
     };
 
     return ( 
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
          <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-md">
-         
          <h1 className= 'text-3xl font-bold text-center mb-6'>
-            QueueHub Manager 
+            QueueHub
          </h1>
         
           <form className='space-y-5'>
@@ -26,15 +56,15 @@ function Login () {
             <ul className="space-y-4">
                 <li className="flex flex-col">
                     <label className="font-medium text-gray-700 mb-1" htmlFor = 'email'>Email: </label>
-                    <input type = "text" id = 'email' required  className="border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"/>
+                    <input type = "text" id = 'email' required onChange={handleEmailChange} className="border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"/>
                 </li>
 
                 <li className="flex flex-col">
                     <label className="font-medium text-gray-700 mb-1" htmlFor = 'password'> Password: </label>
-                    <input type ="password" id = 'password'  required  className="border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"/>
+                    <input type ="password" id = 'password' required  onChange= {handlePasswordChange} className="border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"/>
                 </li>
             </ul>
-             <button type='button' className="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition" > {isSignUpActive ? "Sign Up" : "Sign In"}</button> 
+             <button type='button'  onClick ={handleSignup} className="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition" > {isSignUpActive ? "Sign Up" : "Sign In"}</button> 
              
         </fieldset>
     
