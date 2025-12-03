@@ -1,6 +1,10 @@
 import {BrowserRouter, Routes, Route,Navigate} from "react-router-dom"
 import Login from './pages/Login';
-import Homepage from "./pages/Homepage";
+
+import FrontDesk from "./pages/FrontDesk";
+import Admin from "./pages/Admin";
+import CardGiver from "./pages/CardGiver";
+
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { auth } from "./firebase";
@@ -36,11 +40,24 @@ function App() {
   if (loading){
     return <div> Loading, please wait .......</div>
   }
+
+    const redirectByRole = () => {
+    if (!user) return <Login />;
+
+    if (role === "Admin") return <Navigate to="/admin" />;
+    if (role === "cardGiver") return <Navigate to="/cardgiver" />;
+    if (role?.startsWith("frontdesk")) return <Navigate to="/frontdesk" />;
+
+    return <Login />;
+    };
+
   return (
     <BrowserRouter>
     <Routes>
-      <Route  path ='/' element = { user ? <Navigate to = '/Homepage' /> : <Login /> } />
-      <Route path = "/Homepage" element = {<ProtectedRoute user = {user}> <Homepage role = {role} /> </ProtectedRoute>  } />
+      <Route  path ='/' element = {redirectByRole()} />
+      <Route path = "/CardGiver" element = {<ProtectedRoute user = {user}> <CardGiver /> </ProtectedRoute>  } />
+      <Route path = "/FrontDesk" element = {<ProtectedRoute user = {user}> <FrontDesk /> </ProtectedRoute>  } />
+      <Route path = "/admin" element = {<ProtectedRoute user = {user}> <Admin /> </ProtectedRoute>  } />
     </Routes>
     </BrowserRouter>
   );

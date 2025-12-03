@@ -90,10 +90,11 @@ function Login () {
                   Email:
                 </label>
                 <input
-                  type="text"
+                  type="email"
                   id="email"
                   value={email}
                   required
+                  pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
                   onChange={(e) => setEmail(e.target.value)}
                   className="border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
@@ -111,6 +112,8 @@ function Login () {
                   id="password"
                   value={password}
                   required
+                  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$"
+                  title="Password must be at least 8 characters and include uppercase, lowercase, and a symbol"
                   onChange={(e) => setPassword(e.target.value)}
                   className="border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
@@ -135,6 +138,7 @@ function Login () {
                     <option value="frontdesk3">Front Desk 3</option>
                     <option value="frontdesk4">Front Desk 4</option>
                     <option value="frontdesk5">Front Desk 5</option>
+                    <option value="Admin"> Admin </option>
             
                   </select>
                 </li>
