@@ -138,7 +138,7 @@ function Login () {
                     <option value="frontdesk3">Front Desk 3</option>
                     <option value="frontdesk4">Front Desk 4</option>
                     <option value="frontdesk5">Front Desk 5</option>
-                    <option value="Admin"> Admin </option>
+                    {/* <option value="Admin"> Admin </option> */}
             
                   </select>
                 </li>
