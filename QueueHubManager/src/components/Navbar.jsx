@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
+import SignOutButton from "./SignOutButton";
 
 function Navbar() {
     const [user, setUser] = useState(null);
@@ -29,12 +30,14 @@ function Navbar() {
         <Link to = '/' className ='text-xl font-bold text-blue-600'> Queue Hub </Link>
         <div className="flex items-center gap-3">
         <h1 className="text-gray-700 font-medium"> 
-            Welcome {role || user?.email || 'Guest' } 
+            Welcome, {role || user?.email || 'Guest' } 
         </h1>
-        <img 
+       {/* This part was suppose to hold users dp
+       <img 
         src={user?.photoUrl || 'placeholder'}
         alt='users dp' 
-        className = 'w-10 h-10 rounded-full' />
+        className = 'w-10 h-10 rounded-full' /> */}
+        <SignOutButton />
         </div>
         </nav>
      );

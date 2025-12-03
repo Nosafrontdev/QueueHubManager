@@ -5,7 +5,6 @@ function Admin() {
     return ( 
         <>
         <Navbar />
-        <SignOutButton />
         <p> This is the Admin Page </p>
         </>
      );
