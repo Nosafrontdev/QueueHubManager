@@ -1,8 +1,11 @@
+
+
 function CentralDisplay() {
     return ( 
+        
         <>
-        <p> this is the central display</p>
         </>
+        
      );
 }
 

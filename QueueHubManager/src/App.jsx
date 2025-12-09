@@ -12,6 +12,7 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "./firebase";
 
+
 function App() {
 
   const [user, setUser] = useState(null);
@@ -58,6 +59,7 @@ function App() {
       <Route path = "/CardGiver" element = {<ProtectedRoute user = {user}> <CardGiver /> </ProtectedRoute>  } />
       <Route path = "/FrontDesk" element = {<ProtectedRoute user = {user}> <FrontDesk /> </ProtectedRoute>  } />
       <Route path = "/admin" element = {<ProtectedRoute user = {user}> <Admin /> </ProtectedRoute>  } />
+      
     </Routes>
     </BrowserRouter>
   );

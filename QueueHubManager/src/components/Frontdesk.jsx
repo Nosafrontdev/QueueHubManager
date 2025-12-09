@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { db } from "../firebase";
 import {
   collection,
@@ -10,13 +10,42 @@ import {
   updateDoc,
   doc,
   serverTimestamp,
+  getDoc
 } from "firebase/firestore";
+import { auth } from "../firebase";
 
 function Frontdesk() {
   const [currentPatient, setCurrentPatient] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [deskRole, setDeskRole] = useState("");
 
+  // --------------------------------------------------
+  // Get this officer's role (frontdesk1–frontdesk5)
+  // --------------------------------------------------
+  useEffect(() => {
+    async function loadRole() {
+      const uid = auth.currentUser?.uid;
+      if (!uid) return;
+
+      const userRef = doc(db, "users", uid);
+      const userSnap = await getDoc(userRef);
+
+      if (userSnap.exists()) {
+        setDeskRole(userSnap.data().role); // "frontdesk3" etc
+      }
+    }
+    loadRole();
+  }, []);
+
+  // --------------------------------------------------
+  // FETCH NEXT PATIENT
+  // --------------------------------------------------
   const fetchNext = async () => {
+    if (!deskRole.startsWith("frontdesk")) {
+      alert("You are not authorized for this action.");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -39,16 +68,14 @@ function Frontdesk() {
       const docData = snap.docs[0];
       const patient = { id: docData.id, ...docData.data() };
 
-      // Mark as served
+      // Mark as served + add servedBy
       await updateDoc(doc(db, "queue", patient.id), {
         served: true,
         servedAt: serverTimestamp(),
+        servedBy: deskRole, // <<< CRITICAL
       });
 
       setCurrentPatient(patient);
-
-      // Optional sound:
-      playVoice(patient.number);
 
     } catch (error) {
       console.error(error);
@@ -58,17 +85,11 @@ function Frontdesk() {
     setLoading(false);
   };
 
-  // Simple text-to-speech function
-  const playVoice = (number) => {
-    const msg = new SpeechSynthesisUtterance(
-      `Patient number ${number}, please proceed to the front desk.`
-    );
-    window.speechSynthesis.speak(msg);
-  };
-
   return (
     <div className="p-8">
-      <h1 className="text-3xl font-bold mb-4">Front Desk Panel</h1>
+      <h1 className="text-3xl font-bold mb-4">
+        {deskRole ? deskRole.toUpperCase() : "Front Desk"}
+      </h1>
 
       <div className="bg-white p-6 w-80 rounded-xl shadow-md">
         <button
