@@ -127,7 +127,7 @@ export default function CentralScreen() {
             <thead>
               <tr className="text-lg text-gray-300 border-b border-white/20">
                 <th className="py-3">Patient Number</th>
-                <th>Time Created</th>
+                <th>Time Arrived</th>
               </tr>
             </thead>
 
