@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 
 import CentralScreen from "../components/CentralScreen";
 import AdsManager from "../components/AdsManager";
+import Footer from "../components/Footer";
 
 
 export default function Admin() {
@@ -12,6 +13,7 @@ export default function Admin() {
     <Navbar />
     <CentralScreen />
    <AdsManager />
+   <Footer />
     </>
   );
 }

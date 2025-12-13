@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
+import Footer from "./Footer";
 
 export default function AdsPlayer() {
   const [ads, setAds] = useState([]);
@@ -77,5 +78,6 @@ export default function AdsPlayer() {
         />
       )}
     </div>
+  
   );
 }

@@ -108,5 +108,6 @@ export default function CentralScreen() {
       </div>
 
     </div>
+    
   );
 }
