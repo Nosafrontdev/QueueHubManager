@@ -1,15 +1,17 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 import CentralScreen from "../components/CentralScreen";
-import Navbar from "../components/Navbar";
-import SignOutButton from "../components/SignOutButton";
+import AdsManager from "../components/AdsManager";
 
-function Admin() {
-    return ( 
-        <>
-        <Navbar />
-        <CentralScreen />
-        </>
-     );
+
+export default function Admin() {
+  return (
+    <>
+    <Navbar />
+    <CentralScreen />
+   <AdsManager />
+    </>
+  );
 }
-
-export default Admin;

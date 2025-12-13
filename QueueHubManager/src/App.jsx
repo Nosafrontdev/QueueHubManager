@@ -5,12 +5,14 @@ import FrontDesk from "./pages/FrontDesk";
 import Admin from "./pages/Admin";
 import CardGiver from "./pages/CardGiver";
 
+
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { auth } from "./firebase";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "./firebase";
+import CentralScreen from "./components/CentralScreen";
 
 
 function App() {
@@ -60,6 +62,9 @@ function App() {
       <Route path = "/FrontDesk" element = {<ProtectedRoute user = {user}> <FrontDesk /> </ProtectedRoute>  } />
       <Route path = "/admin" element = {<ProtectedRoute user = {user}> <Admin /> </ProtectedRoute>  } />
       
+    
+ 
+ 
     </Routes>
     </BrowserRouter>
   );
